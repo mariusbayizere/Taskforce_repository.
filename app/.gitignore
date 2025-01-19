@@ -1,0 +1,60 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Flask and Python-specific files
+*.log
+*.pot
+*.pyc
+
+# Environment variables
+.env
+*.env
+.env.*
+
+# Database files
+*.sqlite3
+*.db
+
+# Migrations
+app/migrations/
+migrations/
+
+# Static assets (build artifacts if generated)
+app/static/images/*
+app/static/styles.css
+!app/static/images/facebook.jpeg
+!app/static/images/instagram.jpeg
+!app/static/images/twitter.png
+!app/static/images/wallet.jpg
+!app/static/styles.css
+
+# IDE and editor-specific files
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Backup and temporary files
+*.bak
+*.swp
+*.swo
+*.tmp
+*.old
+
+# Testing and coverage files
+.coverage
+*.coverage
+.pytest_cache/
+htmlcov/
+
+# Node.js dependencies (if applicable)
+node

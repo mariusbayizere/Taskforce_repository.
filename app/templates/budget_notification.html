@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Notification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Budget Notification</h1>
+    <p class="notification">
+        The following accounts have exceeded their budget:
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Account Name</th>
+                <th>Budget</th>
+                <th>Total Expenses</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in exceeded_accounts %}
+            <tr>
+                <td>{{ account.account_name }}</td>
+                <td>{{ account.budget }}</td>
+                <td>{{ account.total_expenses }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('account.display_accounts') }}">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{% extends "backup_transaction.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Update Transaction' }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<style>
+body {
+    font-family: 'Outfit';
+}
+
+</style>
+<body>
+<div class="container mt-5 form-container">
+    <h2>{{ 'Update Transaction' }}</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div>
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} mt-2">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.account_id.label }}
+            {{ form.account_id(class="form-control", id="account_id", placeholder="Enter Account ID") }}
+            {% if form.account_id.errors %}
+                <small class="text-danger">{{ form.account_id.errors[0] }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.transaction_type.label }}
+            {{ form.transaction_type(class="form-control", id="transaction_type") }}
+            {% if form.transaction_type.errors %}
+                <small class="text-danger">{{ form.transaction_type.errors[0] }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.amount.label }}
+            {{ form.amount(class="form-control", id="amount", placeholder="Enter Amount") }}
+            {% if form.amount.errors %}
+                <small class="text-danger">{{ form.amount.errors[0] }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.created_at.label }}
+            {{ form.created_at(class="form-control", id="created_at", type="date") }}
+            {% if form.created_at.errors %}
+                <small class="text-danger">{{ form.created_at.errors[0] }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.description.label }}
+            {{ form.description(class="form-control", id="description", placeholder="Enter Description") }}
+            {% if form.description.errors %}
+                <small class="text-danger">{{ form.description.errors[0] }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.category_id.label }}
+            {{ form.category_id(class="form-control", id="category_id", placeholder="Select a category") }}
+            {% if form.category_id.errors %}
+                <small class="text-danger">{{ form.category_id.errors[0] }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.subcategory_id.label }}
+            {{ form.subcategory_id(class="form-control", id="subcategory_id", placeholder="Select a subcategory") }}
+            {% if form.subcategory_id.errors %}
+                <small class="text-danger">{{ form.subcategory_id.errors[0] }}</small>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById("category_id").addEventListener("change", function() {
+        const categoryId = this.value;
+        const subcategorySelect = document.getElementById("subcategory_id");
+        subcategorySelect.innerHTML = "<option value=''>Select a Subcategory</option>";
+
+        if (categoryId) {
+            fetch(`/get_subcategories/${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(sub => {
+                        const option = document.createElement("option");
+                        option.value = sub[0];
+                        option.textContent = sub[1];
+                        subcategorySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error loading subcategories:", error));
+        }
+    });
+</script>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Subcategories</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Subcategories</h2>
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label }}
+            {{ form.name(class="form-control", placeholder="Enter Subcategory Name") }}
+            {% if form.name.errors %}
+                <small class="text-danger">{{ form.name.errors[0] }}</small>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.category_id.label }}
+            {{ form.category_id(class="form-control") }}
+            {% if form.category_id.errors %}
+                <small class="text-danger">{{ form.category_id.errors[0] }}</small>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Subcategory</button>
+    </form>
+    <hr>
+    <ul class="list-group">
+        {% for subcategory in subcategories %}
+            <li class="list-group-item">
+                {{ subcategory.name }} ({{ subcategory.category.name }})
+                <form method="POST" action="{{ url_for('subcategoriesbp.delete_subcategory', subcategory_id=subcategory.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

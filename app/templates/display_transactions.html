@@ -1,0 +1,54 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Transaction Data</h2>
+    <a href="{{ url_for('transaction.add_transaction') }}" class="btn btn-primary mb-3 btn-sm">Add Transaction</a>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Account ID</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>Created At</th>
+                    <th>Description</th>
+                    <th class="action-column">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.transaction_id }}</td>
+                    <td>{{ transaction.account_id }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.created_at }}</td>
+                    <td>{{ transaction.description }}</td>
+                    <td class="action-column">
+                        <div class="btn-group" role="group">
+                            <a
+                                href="{{ url_for('transaction.update_transaction', transaction_id=transaction.transaction_id) }}"
+                                class="btn btn-primary btn-sm m-3"
+                            >Update</a>
+                            <form
+                                action="{{ url_for('transaction.delete_transaction', transaction_id=transaction.transaction_id) }}"
+                                method="post"
+                                style="display: inline;"
+                            >
+                                <button type="submit" class="btn btn-danger btn-sm m-3">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

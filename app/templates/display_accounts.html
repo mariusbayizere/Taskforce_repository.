@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+    <style>
+        .action-column {
+            width: 200px;
+        }
+        .btn-group {
+            margin-bottom: 10px;
+        }
+        .btn-group button {
+            margin-right: 5px;
+        }
+        body{
+            font-family: 'Outfit';
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Accounts List</h2>
+        <a href="{{ url_for('account.add_account') }}" class="btn btn-primary mb-3">Add Account</a>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Account ID</th>
+                    <th>User ID</th>
+                    <th>Account Name</th>
+                    <th>Account Type</th>
+                    <th>Balance </th>
+                    <th>Budget  </th>
+                    <th>Created At</th>
+                    <th class="action-column">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                <tr>
+                    <td>{{ account.account_id }}</td>
+                    <td>{{ account.user_id }}</td>
+                    <td>{{ account.account_name }}</td>
+                    <td>{{ account.account_type }}</td>
+                    <td>{{ account.balance }}</td>
+                    <td>{{ account.budget }}</td>
+                    <td>{{ account.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <!-- <td class="action-column">
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('account.update_account', account_id=account.account_id) }}" class="btn btn-primary btn-lg mr-2">Update</a>
+                            <form action="{{ url_for('account.delete_account', account_id=account.account_id) }}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-lg mr-2">Delete</button>
+                            </form>
+                            <a href="{{ url_for('account.set_budget', account_id=account.account_id) }}" class="btn btn-primary btn-lg">Budget</a>
+                        </div>
+                    </td> -->
+
+                    <td class="action-column">
+                        <div class="btn-group" role="group">
+                            <a href="{{ url_for('account.update_account', account_id=account.account_id) }}" class="btn btn-primary btn-lg mr-2">Update</a>
+                            <form action="{{ url_for('account.delete_account', account_id=account.account_id) }}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger btn-lg mr-2">Delete</button>
+                            </form>
+                            <a href="{{ url_for('account.set_budget', account_id=account.account_id, user_id=account.user_id) }}" class="btn btn-primary btn-lg">Budget</a>
+                        </div>
+                    </td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

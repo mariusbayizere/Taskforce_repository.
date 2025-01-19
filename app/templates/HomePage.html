@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container{
+        margin-left: 20px;
+        margin-top: 140px;
+    }
+</style>
+  <div>
+    <h1>Welcome to the Wallet App!</h1>
+    <div class="additional-info">
+      <p>
+        The Wallet App is your personal finance assistant, designed to help you manage your money effortlessly. 
+        Whether you're tracking daily expenses, setting saving goals, or analyzing your spending patterns, this app has you covered.
+      </p>
+      <p>
+        Key Features:
+        <ul>
+          <li><strong>Expense Tracking:</strong> Easily add and categorize your expenses to keep track of where your money goes.</li>
+          <li><strong>Saving Goals:</strong> Set and monitor your savings targets to achieve financial milestones.</li>
+          <li><strong>Expense Analysis:</strong> Visualize your spending patterns with detailed reports and charts.</li>
+          <li><strong>Secure and Private:</strong> Your data is securely stored with top-level encryption to ensure privacy and safety.</li>
+        </ul>
+      </p>
+      <p>
+        Join millions of users who have improved their financial management with Wallet App. Start organizing your finances today!
+      </p>
+      <a href="{{ url_for('account.display_accounts') }}" class="btn btn-primary btn-sm">My Account</a>
+    </div>
+  </div>
+{% endblock %}

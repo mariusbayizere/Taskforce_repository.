@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Add New Account</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="account_id">Account ID</label>
+                {{ form.account_id(class="form-control", id="account_id") }}
+            </div>
+        
+            <div class="form-group">
+                <label for="user_id">User ID</label>
+                {{ form.user_id(class="form-control", id="user_id") }}
+            </div>
+            <div class="form-group">
+                <label for="account_name">Account Name</label>
+                {{ form.account_name(class="form-control", id="account_name") }}
+            </div>
+            <div class="form-group">
+                <label for="account_type">Account Type</label>
+                {{ form.account_type(class="form-control", id="account_type") }}
+            </div>
+            <div class="form-group">
+                <label for="balance">Balance</label>
+                {{ form.balance(class="form-control", id="balance") }}
+            </div>
+            <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+            <a href="{{ url_for('account.display_accounts') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
