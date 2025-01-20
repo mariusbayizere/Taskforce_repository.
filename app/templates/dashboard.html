@@ -64,7 +64,11 @@
 
                     <a href="{{ url_for('categoriesbp.manage_categories') }}" class="sidebar-link {% if request.endpoint == 'transaction.add_transaction' %}active{% endif %}">
                         Categories
-                    </a>    
+                    </a>   
+                    
+                    <a href="{{ url_for('subcategoriesbp.manage_subcategories') }}" class="sidebar-link {% if request.endpoint == 'transaction.add_transaction' %}active{% endif %}">
+                        Categories
+                    </a>   
 
 
                     <a href="#" class="sidebar-link">Settings</a>
