@@ -62,6 +62,10 @@
                         Generate Report
                     </a>
 
+                    <a href="{{ url_for('categoriesbp.manage_categories') }}" class="sidebar-link {% if request.endpoint == 'transaction.add_transaction' %}active{% endif %}">
+                        Categories
+                    </a>    
+
 
                     <a href="#" class="sidebar-link">Settings</a>
                     <a href="{{ url_for('user.logout') }}" class="sidebar-link text-danger">Logout</a>
@@ -111,6 +115,7 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Transaction ID</th>
+                                        <th>Account ID</th>
                                         <th>Type</th>
                                         <th>Amount</th>
                                         <th>Date</th>
@@ -121,6 +126,7 @@
                                     {% for transaction in transactions %}
                                     <tr>
                                         <td>{{ transaction.transaction_id }}</td>
+                                        <td>{{ transaction.account_id }}</td>
                                         <td>{{ transaction.transaction_type }}</td>
                                         <td>{{ transaction.amount }}</td>
                                         <td>{{ transaction.created_at }}</td>
