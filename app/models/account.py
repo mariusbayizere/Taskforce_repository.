@@ -1,9 +1,8 @@
+import os
 from app import db
 from sqlalchemy import Enum
 from datetime import datetime
 from .industry import Industry
-
-import os
 
 
 print(os.path.abspath(__file__))
@@ -51,7 +50,7 @@ def __str__(self):
 
     def is_budget_exceeded(self):
         """Check if the total expenses exceed the set budget."""
-        if self.budget is not None:  # Ensure budget is set
+        if self.budget is not None:
             return self.get_total_expenses() > self.budget
         return False
 

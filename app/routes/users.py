@@ -148,15 +148,88 @@ def logout():
 
 
 
+# @user_bp.route("/dashboard")
+# def dashboard():
+#     if 'user_id' not in session:
+#         flash("Please log in to access the dashboard.", "danger")
+#         return redirect(url_for("user.login"))
+#     return render_template("dashboard.html")
+
+# At the top of app/routes/users.py
+from flask import render_template, flash, redirect, url_for, session
+from app.models.account import Account
+from app.models.transaction import Transaction
+from app.models.user import User
+from app import db
+
 @user_bp.route("/dashboard")
 def dashboard():
-    if 'user_id' not in session:
-        flash("Please log in to access the dashboard.", "danger")
-        return redirect(url_for("user.login"))
-    return render_template("dashboard.html")
+    try:
+        # Get all accounts for the user (this can be public or demo data if no login is required)
+        user_accounts = Account.query.all()  # You can fetch public accounts or allow demo data
+
+        # Initialize totals and transactions list
+        total_income = 0
+        total_expense = 0
+        transactions = []
+        
+        # Aggregate transactions from all accounts (assuming public access)
+        for account in user_accounts:
+            # Get transactions for this account, order by most recent, limit to 10
+            account_transactions = Transaction.query.filter_by(
+                account_id=account.account_id
+            ).order_by(Transaction.created_at.desc()).limit(10).all()
+
+            # Add transactions to the list and calculate totals
+            for t in account_transactions:
+                transactions.append(t)
+                if t.is_income():
+                    total_income += t.amount
+                elif t.is_expense():
+                    total_expense += t.amount
+        
+        # Sort all transactions by date (most recent first)
+        transactions.sort(key=lambda x: x.created_at, reverse=True)
+        
+        # Keep only the 10 most recent transactions across all accounts
+        transactions = transactions[:10]
+        
+        # Calculate balance
+        balance = total_income - total_expense
+        
+        return render_template(
+            "dashboard.html",
+            transactions=transactions,
+            total_income=total_income,
+            total_expense=total_expense,
+            balance=balance
+        )
+    
+    except Exception as e:
+        # Log the error and flash a user-friendly message
+        print(f"Error in dashboard route: {str(e)}")
+        flash("An error occurred while loading the dashboard.", "danger")
+        return redirect(url_for("user.dashboard"))
 
 
 from app.models import Account
+
+# @user_bp.route("/dashboard")
+# def dashboard():
+#     if 'user_id' not in session:
+#         flash("Please log in to access the dashboard.", "danger")
+#         return redirect(url_for("user.login"))
+
+#     # Retrieve account_id for the logged-in user
+#     user_id = session['user_id']
+#     account = Account.query.filter_by(user_id=user_id).first()
+
+#     if account:
+#         account_id = account.account_id
+#     else:
+#         account_id = None  # Handle case where no account is found
+
+#     return render_template("dashboard.html", account_id=account_id)
 
 
 # def get_account_ids():

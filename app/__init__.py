@@ -19,7 +19,8 @@ def init_app(app):
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:auca%402023@localhost/wallet_app'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:auca%402023@localhost/wallet_app'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:yourpassword@localhost:5432/wallet_app'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ECHO'] = False
     app.secret_key = 'c89e61772573f1b017aa1ce7d45b839a87e41f61297455d6'

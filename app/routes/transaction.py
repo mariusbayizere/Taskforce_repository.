@@ -186,14 +186,44 @@ def delete_transaction(transaction_id):
     return redirect(url_for("transaction.display_transactions"))
 
 
-@transaction_bp.route("/transactions", methods=["GET"])
-def display_transactions():
-    transactions = Transaction.query.all()
-    return render_template("display_transactions.html", transactions=transactions)
+# @transaction_bp.route("/transactions", methods=["GET"])
+# def display_transactions():
+#     transactions = Transaction.query.all()
+#     return render_template("display_transactions.html", transactions=transactions)
 
+# @transaction_bp.route("/account/<int:account_id>/transactions", methods=["GET"])
+# def view_account_transactions(account_id):
+#     # Fetch all transactions for the account
+#     transactions = Transaction.query.filter_by(account_id=account_id).order_by(Transaction.created_at).all()
+
+#     if not transactions:
+#         flash(f"No transactions found for Account ID {account_id}", "warning")
+#         return redirect(url_for("transaction.add_transaction"))
+
+#     # Calculate totals
+#     total_income = sum(t.amount for t in transactions if t.is_income())
+#     total_expense = sum(t.amount for t in transactions if t.is_expense())
+#     balance = total_income - total_expense
+
+#     return render_template(
+#         "account_transactions.html",
+#         transactions=transactions,
+#         total_income=total_income,
+#         total_expense=total_expense,
+#         balance=balance,
+#     )
+
+
+
+# In your Flask blueprint
 @transaction_bp.route("/account/<int:account_id>/transactions", methods=["GET"])
 def view_account_transactions(account_id):
-    # Fetch all transactions for the account
+
+    account = Account.query.get(account_id)  # Check if the account exists
+    if not account:
+        flash(f"No account found with ID {account_id}. Please create an account.", "danger")
+        return redirect(url_for('account.create_account'))  # Redirect to account creation page
+
     transactions = Transaction.query.filter_by(account_id=account_id).order_by(Transaction.created_at).all()
 
     if not transactions:
@@ -212,6 +242,7 @@ def view_account_transactions(account_id):
         total_expense=total_expense,
         balance=balance,
     )
+
 
 
 

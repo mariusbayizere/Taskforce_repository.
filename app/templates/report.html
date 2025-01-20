@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -35,5 +35,108 @@
     <p>Total Income: {{ total_income }}</p>
     <p>Total Expense: {{ total_expense }}</p>
     <p>Balance: {{ balance }}</p>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .report-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+        }
+        .report-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .report-container p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+        table th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        .btn-back {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background-color: dodgerblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <h1>Report</h1>
+        <p>Report for the period: {{ start_date }} to {{ end_date }}</p>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.transaction_id }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ 'Income' if transaction.is_income() else 'Expense' }}</td>
+                        <td>{{ transaction.created_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p><strong>Total Income:</strong> {{ total_income }}</p>
+        <p><strong>Total Expense:</strong> {{ total_expense }}</p>
+        <p><strong>Balance:</strong> {{ balance }}</p>
+
+        <a href="{{ url_for('user.home') }}" class="btn-back">Back to Dashboard</a>
+    </div>
 </body>
 </html>
