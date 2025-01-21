@@ -1,0 +1,60 @@
+# docker-compose.yml
+# version: '3.8'
+# services:
+#   web:
+#     build: .
+#     volumes:
+#       - .:/wallet_app
+#     ports:
+#       - "5002:5000"
+#     environment:
+#       - DATABASE_URL=postgresql://postgres:password@postgres:5432/wallet_db
+#       - FLASK_APP=app.run
+#       - FLASK_ENV=development
+#       - PYTHONPATH=/wallet_app
+#     depends_on:
+#       - postgres
+#   postgres:
+#     image: postgres:latest
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: wallet_db
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+# volumes:
+#   postgres_data:
+
+# docker-compose.yml
+version: '3.8'
+services:
+  web:
+    build: .
+    volumes:
+      - .:/wallet_app
+      - /wallet_app/venv/
+      - /opt/venv/
+    ports:
+      - "5002:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@postgres:5432/wallet_db
+      - FLASK_APP=app.run
+      - FLASK_ENV=development
+      - PYTHONPATH=/wallet_app
+      - PATH=/opt/venv/bin:$PATH
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: wallet_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
