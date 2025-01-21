@@ -32,7 +32,8 @@ def add_user():
         print("[DEBUG] User added to the database.")
         
         flash("User created successfully.", "success")
-        return redirect(url_for("user.display_users"))
+        # return redirect(url_for("user.display_users"))
+        return redirect(url_for("user.login"))
     else:
         print("[DEBUG] Registration form validation failed.")
     
@@ -125,9 +126,11 @@ def login():
                 
                 # Redirect based on role
                 if user.User_Role.lower() == "admin":
-                    return redirect(url_for("user.display_users"))
+                    # return redirect(url_for("user.display_users"))
+                    return redirect(url_for("user.dashboard"))
                 elif user.User_Role.lower() == "user":
-                    return redirect(url_for("user.display_users"))
+                    # return redirect(url_for("user.display_users"))
+                    return redirect(url_for("user.dashboard"))
                 else:
                     flash("User role is not recognized.", "danger")
             else:
@@ -164,9 +167,11 @@ from app import db
 
 @user_bp.route("/dashboard")
 def dashboard():
-    try:
+    # try:
         # Get all accounts for the user (this can be public or demo data if no login is required)
+        print("Fetching user accounts...")
         user_accounts = Account.query.all()  # You can fetch public accounts or allow demo data
+        print(user_accounts)
 
         # Initialize totals and transactions list
         total_income = 0
@@ -197,19 +202,29 @@ def dashboard():
         # Calculate balance
         balance = total_income - total_expense
         
+        # return render_template(
+        #     "dashboard.html",
+        #     transactions=transactions,
+        #     total_income=total_income,
+        #     total_expense=total_expense,
+        #     balance=balance
+        # )
         return render_template(
             "dashboard.html",
             transactions=transactions,
             total_income=total_income,
             total_expense=total_expense,
-            balance=balance
+            balance=balance,
+            user_accounts=user_accounts  # Pass accounts to the template
         )
-    
-    except Exception as e:
-        # Log the error and flash a user-friendly message
-        print(f"Error in dashboard route: {str(e)}")
-        flash("An error occurred while loading the dashboard.", "danger")
-        return redirect(url_for("user.dashboard"))
+
+
+
+    # except Exception as e:
+    #     # Log the error and flash a user-friendly message
+    #     print(f"Error in dashboard route: {str(e)}")
+    #     flash("An error occurred while loading the dashboard.", "danger")
+    #     return redirect(url_for("user.dashboard"))
 
 
 from app.models import Account

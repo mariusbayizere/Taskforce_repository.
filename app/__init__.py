@@ -19,8 +19,8 @@ def init_app(app):
 
 def create_app():
     app = Flask(__name__)
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:auca%402023@localhost/wallet_app'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://root:bCObtI42AoEx5wE1Rux3KOhJ0zq3wMch@dpg-cu79rdrtq21c739l0ehg-a/wallet_app_0qy4'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:auca%402023@localhost/wallet_app'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://root:bCObtI42AoEx5wE1Rux3KOhJ0zq3wMch@dpg-cu79rdrtq21c739l0ehg-a/wallet_app_0qy4'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ECHO'] = False
     app.secret_key = 'c89e61772573f1b017aa1ce7d45b839a87e41f61297455d6'
@@ -42,6 +42,10 @@ def create_app():
     app.register_blueprint(account_bp, url_prefix='/add_account')
     app.register_blueprint(transaction_bp, url_prefix='/add_transaction')
     app.register_blueprint(visualization_bp, url_prefix='/api/transactions/summary')
+
+    @app.route('/')
+    def index():
+        return redirect(url_for('user.login'))
 
     @app.before_request
     def check_session_timeout():

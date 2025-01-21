@@ -57,6 +57,29 @@
                     <a href="{{ url_for('transaction.add_transaction') }}" class="sidebar-link {% if request.endpoint == 'transaction.add_transaction' %}active{% endif %}">
                         Add Transaction
                     </a>
+                    
+                    <!-- {% for account in user_accounts %}
+                    <a href="{{ url_for('account.set_budget', account_id=account.account_id) }}">
+                        Set Budget for {{ account.name }}
+                    </a>
+                    {% endfor %} -->
+                    
+                    <div class="dropdown">
+                        <a class="sidebar-link dropdown-toggle" href="#" id="setBudgetDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Set Budget
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="setBudgetDropdown">
+                            {% for account in user_accounts %}
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('account.set_budget', account_id=account.account_id) }}">
+                                    {{ account.account_name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+
 
                     <a href="{{ url_for('transaction.generate_report') }}" class="sidebar-link {% if request.endpoint == 'transaction.add_transaction' %}active{% endif %}">
                         Generate Report

@@ -1,7 +1,7 @@
 from app import db
 from datetime import datetime
 from app.routes import transaction
-from app.models import Account, db
+from app.models import Account
 from app.views.forms import AccountForm
 from flask import render_template, flash, redirect, url_for
 from flask import Blueprint, request, render_template, redirect, url_for, flash

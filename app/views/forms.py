@@ -52,7 +52,7 @@ class AccountForm(FlaskForm):
     account_name = StringField('Account Name', validators=[DataRequired(), Length(max=100)])
     account_type = SelectField(
         'Account Type',
-        choices=[('Expenses', 'Expenses'), ('Income', 'Income')],
+        choices=[('Bank Account', 'Bank account'),  ('Mobile Money Account', 'Mobile money account'), ('Cash Account', 'cash account')],
         validators=[DataRequired()]
     )
     balance = FloatField('Balance', validators=[DataRequired()])
